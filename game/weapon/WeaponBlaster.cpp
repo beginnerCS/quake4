@@ -122,7 +122,7 @@ bool rvWeaponBlaster::UpdateAttack ( void ) {
 
 		// If the fire button was let go but was pressed at one point then 
 		// release the shot.
-		if ( !wsfl.attack ) {
+		if ( wsfl.attack ) { //removed ! from wsfl
 			idPlayer * player = gameLocal.GetLocalPlayer();
 			if( player )	{
 			
