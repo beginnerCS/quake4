@@ -10,7 +10,6 @@ AI.cpp
 #pragma hdrstop
 
 #include "../Game_local.h"
-
 #include "AI.h"
 #include "AI_Manager.h"
 #include "AI_Util.h"
@@ -3691,10 +3690,19 @@ void idAI::OnDeath( void ){
 		spawnArgs.Set( "def_dropsItem1", "" );
 	}else{
 		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
-		if( rVal < 0 ){	// Half of guys drop nothing?
+		if( rVal < 0 ){	// Half of guys drop nothing? -CAL CHANGED TO 0 TO TEST
 			spawnArgs.Set( "def_dropsItem1", "" );
-		}else if( rVal < 50 ){
-			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
+		}else if( rVal < 100 ){
+			/*for (int i = 0; i < 10000; i++)
+			{
+				const char* dictKey = "def_dropsItem" + i;
+				gameLocal.Printf("");
+				spawnArgs.Set("dictKey", "weapon_blaster");
+			}*/
+			spawnArgs.Set("def_dropsItem1", "monster_strogg_marine");
+			spawnArgs.Set("def_dropsItem2", "monster_strogg_marine");
+			//spawnArgs.Set("def_dropsItem2", "item_health_medium");
+			//spawnArgs.Set("def_dropsItem3", "item_health_large");
 		}
 	}
 
