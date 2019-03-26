@@ -3690,19 +3690,86 @@ void idAI::OnDeath( void ){
 		spawnArgs.Set( "def_dropsItem1", "" );
 	}else{
 		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
-		if( rVal < 0 ){	// Half of guys drop nothing? -CAL CHANGED TO 0 TO TEST
-			spawnArgs.Set( "def_dropsItem1", "" );
-		}else if( rVal < 100 ){
-			/*for (int i = 0; i < 10000; i++)
-			{
-				const char* dictKey = "def_dropsItem" + i;
-				gameLocal.Printf("");
-				spawnArgs.Set("dictKey", "weapon_blaster");
-			}*/
+		if( rVal < 50 ){	// Half of guys drop nothing? -CAL CHANGED TO 0 TO TEST
+			//spawnArgs.Set( "def_dropsItem1", "" );
 			spawnArgs.Set("def_dropsItem1", "monster_strogg_marine");
-			spawnArgs.Set("def_dropsItem2", "monster_strogg_marine");
-			//spawnArgs.Set("def_dropsItem2", "item_health_medium");
-			//spawnArgs.Set("def_dropsItem3", "item_health_large");
+		}else if( rVal < 100 ){			
+			if (rVal < 53)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_shard");
+			}
+			else if (rVal < 55)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_oneHP");
+			}
+			else if (rVal < 57)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_small");
+			}
+			else if (rVal < 59)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_large");
+			}
+			else if (rVal < 61)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_mega");
+			}
+			else if (rVal < 63)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_shard");
+			}
+			else if (rVal < 65)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_small");
+			}
+			else if (rVal < 67)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_large");
+			}
+			else if (rVal < 69)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_small_moveable");
+			}
+			else if (rVal < 71)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_health_large_moveable");
+			}
+			else if (rVal < 73)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_shard_moveable");
+			}
+			else if (rVal < 75)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_small_sp");
+			}
+			else if (rVal < 77)
+			{
+				spawnArgs.Set("def_dropsItem1", "item_armor_large_sp");
+			}
+			else if (rVal < 79)
+			{
+				spawnArgs.Set("def_dropsItem1", "powerup_quad_damage");
+			}
+			else if (rVal < 81)
+			{
+				spawnArgs.Set("def_dropsItem1", "powerup_haste");
+			}
+			else if (rVal < 83)
+			{
+				spawnArgs.Set("def_dropsItem1", "powerup_scout");
+			}
+			else if (rVal < 85)
+			{
+				spawnArgs.Set("def_dropsItem1", "powerup_doubler");
+			}
+			else if (rVal < 87)
+			{
+				spawnArgs.Set("def_dropsItem1", "powerup_guard");
+			}
+			else if (rVal < 100)
+			{
+				spawnArgs.Set("def_dropsItem1", "");
+			}
 		}
 	}
 
