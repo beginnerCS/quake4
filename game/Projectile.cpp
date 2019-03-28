@@ -734,7 +734,8 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 	}
 
 	// Can the projectile damage?  
-	canDamage = ent->fl.takedamage && !(( collision.c.material != NULL ) && ( collision.c.material->GetSurfaceFlags() & SURF_NODAMAGE ));
+	canDamage = ent->fl.takedamage && !((collision.c.material != NULL) && (collision.c.material->GetSurfaceFlags() & SURF_NODAMAGE));
+	
   
  	// direction of projectile
  	dir = velocity;
@@ -867,9 +868,9 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 		}
 
 // RAVEN END
-
+		
 	// if the hit entity takes damage
-	if ( canDamage ) {
+		if ( canDamage ) {
 
  		if ( damageDefName[0] != '\0' ) {
 			idVec3 dir = velocity;
@@ -890,8 +891,8 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 					}
 				}
 			}	
-// RAVEN END
- 			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
+// RAVEN END			
+			ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);			
 			
 			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
 				statManager->WeaponHit( (const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0 );			

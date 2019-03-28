@@ -219,6 +219,7 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 rvWeaponMachinegun::State_Fire
 ================
 */
+
 stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
@@ -226,17 +227,18 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			if ( wsfl.zoom ) {
-				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( true, 1, spreadZoom, 0, 1.0f );
-				fireHeld = true;
+			if ( wsfl.zoom ) {				
+					nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(true, 1, spreadZoom, 0, 1.0f);
+					fireHeld = true;
+				
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 				Attack ( false, 1, spread, 0, 1.0f );
 			}
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
-			return SRESULT_STAGE ( STAGE_WAIT );
-	
+
+			PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
+				
 		case STAGE_WAIT:		
 			if ( !fireHeld && wsfl.attack && gameLocal.time >= nextAttackTime && AmmoInClip() && !wsfl.lowerWeapon ) {
 				SetState ( "Fire", 0 );

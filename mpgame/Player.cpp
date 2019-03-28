@@ -49,7 +49,7 @@ bool g_ObjectiveSystemOpen = false;
 const int LADDER_RUNG_DISTANCE = 32;
 
 // amount of health per dose from the health station
-const int HEALTH_PER_DOSE = 10;
+const int HEALTH_PER_DOSE = 1000;
 
 // time before a weapon dropped to the floor disappears
 const int WEAPON_DROP_TIME = 20 * 1000;
@@ -333,9 +333,9 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 	//Clear();
 
 	// health/armor
-	maxHealth		= dict.GetInt( "maxhealth", "100" );
-	armor			= dict.GetInt( "armor", "50" );
-	maxarmor		= dict.GetInt( "maxarmor", "100" );
+	maxHealth		= dict.GetInt( "maxhealth", "10000" );
+	armor			= dict.GetInt( "armor", "5000" );
+	maxarmor		= dict.GetInt( "maxarmor", "10000" );
 
 	// ammo
 	for( i = 0; i < MAX_AMMOTYPES; i++ ) {
@@ -3030,7 +3030,7 @@ void idPlayer::RestorePersistantInfo( void ) {
 	spawnArgs.Copy( gameLocal.persistentPlayerInfo[entityNumber] );
 
 	inventory.RestoreInventory( this, spawnArgs );
- 	health = spawnArgs.GetInt( "health", "100" );
+ 	health = spawnArgs.GetInt( "health", "10000" );
  	if ( !gameLocal.isClient ) {
  		idealWeapon = spawnArgs.GetInt( "current_weapon", "0" );
  	}
@@ -3298,11 +3298,11 @@ bool idPlayer::UserInfoChanged( void ) {
 	}
 
 	if( PowerUpActive( POWERUP_GUARD ) ) {
-		inventory.maxHealth = 200;
-		inventory.maxarmor = 200;
+		inventory.maxHealth = 20000;
+		inventory.maxarmor = 20000;
 	} else {
-		inventory.maxHealth = spawnArgs.GetInt( "maxhealth", "100" );
-		inventory.maxarmor = spawnArgs.GetInt( "maxarmor", "100" );
+		inventory.maxHealth = spawnArgs.GetInt( "maxhealth", "10000" );
+		inventory.maxarmor = spawnArgs.GetInt( "maxarmor", "10000" );
 	}
 
  	spec = ( idStr::Icmp( userInfo->GetString( "ui_spectate" ), "Spectate" ) == 0 );
@@ -4813,8 +4813,8 @@ bool idPlayer::GivePowerUp( int powerup, int time, bool team ) {
 		}
 		case POWERUP_GUARD: {
 			nextHealthPulse = gameLocal.time + HEALTH_PULSE;
-			inventory.maxHealth = 200;
-			inventory.maxarmor = 200;
+			inventory.maxHealth = 20000;
+			inventory.maxarmor = 20000;
 
 			break;
 		}
@@ -4970,13 +4970,13 @@ void idPlayer::UpdatePowerUps( void ) {
 		if( health > 0 ) {
 			if ( PowerUpActive ( POWERUP_REGENERATION ) || PowerUpActive ( POWERUP_GUARD ) ) {
 				int healthBoundary = inventory.maxHealth; // health will regen faster under this value, slower above
-				int healthTic = 15;
+				int healthTic = 1500;
 
 				if( PowerUpActive ( POWERUP_GUARD ) ) {
 					// guard max health == 200, so set the boundary back to 100
 					healthBoundary = inventory.maxHealth / 2;
 					if( PowerUpActive (POWERUP_REGENERATION) ) {
-						healthTic = 30;
+						healthTic = 3000;
 					}
 				}
 
@@ -6531,7 +6531,7 @@ bool idPlayer::HandleSingleGuiCommand( idEntity *entityGui, idLexer *src ) {
 	}
 
 	if ( token.Icmp( "addhealth" ) == 0 ) {
-		if ( entityGui && health < 100 ) {
+		if ( entityGui && health < 10000 ) {
 			int _health = entityGui->spawnArgs.GetInt( "gui_parm1" );
 			int amt = ( _health >= HEALTH_PER_DOSE ) ? HEALTH_PER_DOSE : _health;
 			_health -= amt;
@@ -6540,8 +6540,8 @@ bool idPlayer::HandleSingleGuiCommand( idEntity *entityGui, idLexer *src ) {
 				entityGui->GetRenderEntity()->gui[ 0 ]->SetStateInt( "gui_parm1", _health );
 			}
 			health += amt;
-			if ( health > 100 ) {
-				health = 100;
+			if ( health > 10000 ) {
+				health = 10000;
 			}
 		}
 		return true;

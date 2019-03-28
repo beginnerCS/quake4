@@ -1535,7 +1535,10 @@ idAI::Pain
 bool idAI::Pain( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location ) {
 	aifl.pain   = idActor::Pain( inflictor, attacker, damage, dir, location );
 	aifl.damage = true;
-
+	if (attacker != this) {
+		// React to taking pain
+		ReactToPain(attacker, damage);
+		
 	// force a blink
 	blink_time = 0;
 
@@ -1552,9 +1555,7 @@ bool idAI::Pain( idEntity *inflictor, idEntity *attacker, int damage, const idVe
 */
 
 	// ignore damage from self
-	if ( attacker != this ) {
-		// React to taking pain
-		ReactToPain ( attacker, damage );
+	
 
 		pain.takenThisFrame += damage;
 		pain.lastTakenTime = gameLocal.time;
@@ -3692,7 +3693,7 @@ void idAI::OnDeath( void ){
 		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
 		if( rVal < 50 ){	// Half of guys drop nothing? -CAL CHANGED TO 0 TO TEST
 			//spawnArgs.Set( "def_dropsItem1", "" );
-			spawnArgs.Set("def_dropsItem1", "monster_strogg_marine");
+			spawnArgs.Set("def_dropsItem1", "");
 		}else if( rVal < 100 ){			
 			if (rVal < 53)
 			{
@@ -3756,19 +3757,52 @@ void idAI::OnDeath( void ){
 			}
 			else if (rVal < 83)
 			{
-				spawnArgs.Set("def_dropsItem1", "powerup_scout");
-			}
-			else if (rVal < 85)
-			{
-				spawnArgs.Set("def_dropsItem1", "powerup_doubler");
-			}
-			else if (rVal < 87)
-			{
 				spawnArgs.Set("def_dropsItem1", "powerup_guard");
 			}
+			//ELITES
 			else if (rVal < 100)
 			{
-				spawnArgs.Set("def_dropsItem1", "");
+				if (rVal < 85)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_strogg_marine");
+					spawnArgs.Set("def_dropsItem2", "monster_strogg_marine");
+					spawnArgs.Set("def_dropsItem3", "monster_strogg_marine");
+				}
+				else if (rVal < 87)
+				{
+
+					spawnArgs.Set("def_dropsItem1", "monster_berserker");
+					spawnArgs.Set("def_dropsItem2", "monster_berserker");
+				}
+				else if (rVal < 89)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_grunt");
+					spawnArgs.Set("def_dropsItem2", "monster_grunt");
+				}
+				else if (rVal < 91)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_grunt");
+				}
+				else if (rVal < 93)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_gladiator");
+				}
+				else if (rVal < 95)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_gunner");
+				}
+				else if (rVal < 97)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_iron_maiden");
+				}
+				else if (rVal < 99)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_scientist");
+				}
+				else if (rVal == 99)
+				{
+					spawnArgs.Set("def_dropsItem1", "monster_makron");
+				}
 			}
 		}
 	}
@@ -4958,6 +4992,11 @@ idAI::ReactToPain
 ============
 */
 void idAI::ReactToPain ( idEntity* attacker, int damage ) {
+	idPlayer* p1 = gameLocal.GetLocalPlayer();
+	if (p1->GetCurrentWeapon() == 3)
+	{
+		Event_BecomePassive(true);
+	}
 	CheckForReplaceEnemy ( attacker );
 }
 	

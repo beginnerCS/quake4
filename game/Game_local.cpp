@@ -5743,6 +5743,11 @@ void idGameLocal::RadiusDamage( const idVec3 &origin, idEntity *inflictor, idEnt
 			continue;
 		}
 
+		if (ent->IsType(idPlayer::GetClassType()) && attacker->IsType(idPlayer::GetClassType()))
+		{
+			continue;
+		}
+
 		idBounds absBounds = clipModel->GetAbsBounds();
 
 		// find the distance from the edge of the bounding box

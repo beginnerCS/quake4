@@ -5892,6 +5892,11 @@ void idGameLocal::RadiusDamage( const idVec3 &origin, idEntity *inflictor, idEnt
 		if ( !ent || ent != ent->GetDamageEntity ( ) ) {
 			continue;
 		}
+		//idPlayer* selfDmg = gameLocal.GetLocalPlayer();
+		//if (ent == selfDmg)
+		//{	
+		//		continue;
+		//}
 
 		// Dont damage inflictor or the ignore entity
 		if( ent == inflictor || ent == ignoreDamage ) {

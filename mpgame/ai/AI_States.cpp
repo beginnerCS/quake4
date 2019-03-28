@@ -1305,19 +1305,17 @@ stateResult_t idAI::State_Torso_Pain ( const stateParms_t& parms ) {
 		STAGE_END,
 		STAGE_END_WAIT
 	};
-	
 	idStr animName;
-	
 	switch ( parms.stage ) {
+
 		case STAGE_START:
-			DisableAnimState ( ANIMCHANNEL_LEGS );
-			
+			DisableAnimState ( ANIMCHANNEL_LEGS );			
 			pain.loopEndTime = gameLocal.time + SEC2MS ( spawnArgs.GetFloat ( "pain_maxLoopTime", "1" ) );
 
 			// Just in case the pain anim wasnt set before we got here.
 			if ( !painAnim.Length ( ) ) {
 				painAnim = "pain";
-			}
+			}			
 			
 			animName = va( "%s_start", painAnim.c_str() );
 			if ( HasAnim ( ANIMCHANNEL_TORSO, animName ) ) {
